@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Responsif</title>
+    <style>
+        /* Gaya dasar untuk desktop */
+        body {
+            background-color: #3498db; /* Biru untuk desktop */
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .grid-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .responsive-text {
+            font-size: 2vw; /* Ukuran teks responsif */
+            color: white;
+            text-align: center;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        /* Media query untuk mobile (≤600px) */
+        @media screen and (max-width: 600px) {
+            body {
+                background-color: #e74c3c; /* Merah untuk mobile */
+                padding: 10px;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr; /* 1 kolom untuk mobile */
+                gap: 15px;
+            }
+            
+            .responsive-text {
+                font-size: 5vw; /* Ukuran lebih besar di mobile */
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>Konten 1</h2>
+            <p>Deskripsi item grid pertama</p>
+        </div>
+        <div class="grid-item">
+            <h2>Konten 2</h2>
+            <p>Deskripsi item grid kedua</p>
+        </div>
+        <div class="grid-item">
+            <h2>Konten 3</h2>
+            <p>Deskripsi item grid ketiga</p>
+        </div>
+    </div>
+    
+    <div class="responsive-text">
+        Ukuran teks ini menyesuaikan dengan lebar layar!
+    </div>
+</body>
+</html>
