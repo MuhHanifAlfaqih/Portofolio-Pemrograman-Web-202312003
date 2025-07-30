@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grid</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);  /* 3 kolom dengan lebar sama */
+            grid-template-rows: repeat(2, 100px);   /* 2 baris dengan tinggi 100px */
+            gap: 15px;                             /* Jarak antar item 15px */
+            background-color: #f8f9fa;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .grid-item {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Warna latar berbeda untuk setiap item */
+        .item1 { background-color: #ff6b6b; }
+        .item2 { background-color: #48dbfb; }
+        .item3 { background-color: #1dd1a1; }
+        .item4 { background-color: #feca57; }
+        .item5 { background-color: #5f27cd; }
+        .item6 { background-color: #ff9ff3; }
+
+        /* Item yang menempati dua kolom */
+        .item5 {
+            grid-column: span 2;  /* Menempati 2 kolom */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item1">1</div>
+        <div class="grid-item item2">2</div>
+        <div class="grid-item item3">3</div>
+        <div class="grid-item item4">4</div>
+        <div class="grid-item item5">5 (2 kolom)</div>
+        <div class="grid-item item6">6</div>
+    </div>
+</body>
+</html>

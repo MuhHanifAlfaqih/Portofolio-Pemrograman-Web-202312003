@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>flexbox</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-evenly; /* Penyebaran lebih merata */
+            align-items: center;          /* Posisi vertikal di tengah */
+            min-height: 200px;            /* Tinggi minimum container */
+            background-color: #f5f5f5;    /* Warna latar belakang */
+            border: 1px solid #ddd;       /* Garis tepi */
+            border-radius: 8px;           /* Sudut melengkung */
+            padding: 20px;
+            margin: 20px auto;            /* Posisi horizontal di tengah */
+            max-width: 800px;             /* Lebar maksimum */
+        }
+
+        .item {
+            background-color: #ff6b6b;    /* Warna lebih modern */
+            color: white;                 /* Warna teks */
+            padding: 30px 20px;           /* Padding atas-bawah lebih besar */
+            margin: 10px;
+            border-radius: 6px;           /* Sudut melengkung */
+            text-align: center;           /* Teks di tengah */
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Efek bayangan */
+            flex: 1;                      /* Item fleksibel yang sama lebar */
+            max-width: 200px;             /* Lebar maksimum item */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">Muh</div>
+        <div class="item">Hanif</div>
+        <div class="item">Alfaqih 

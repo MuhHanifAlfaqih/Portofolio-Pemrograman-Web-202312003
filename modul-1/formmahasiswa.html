@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Mahasiswa Baru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        fieldset {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        legend {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .info-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Kampus -->
+        <div class="logo">
+            <img src="stitek.png" alt="Logo Kampus">
+        </div>
+
+        <!-- Judul Halaman -->
+        <h1>Formulir Pendaftaran Mahasiswa Baru</h1>
+
+        <!-- Formulir Pendaftaran -->
+        <form action="#" method="post">
+            <!-- Kelompok Data Pribadi -->
+            <fieldset>
+                <legend>Data Pribadi</legend>
+                
+                <!-- Input Nama Lengkap -->
+                <label for="nama">Nama Lengkap*</label>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+                
+                <!-- Input Email -->
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+                
+                <!-- Radio Button Jenis Kelamin -->
+                <label>Jenis Kelamin*</label>
+                <div class="radio-group">
+                    <input type="radio" id="pria" name="jenis_kelamin" value="Pria" required>
+                    <label for="pria">Pria</label>
+                    
+                    <input type="radio" id="wanita" name="jenis_kelamin" value="Wanita">
+                    <label for="wanita">Wanita</label>
+                </div>
+                
+                <!-- Textarea Alamat -->
+                <label for="alamat">Alamat Lengkap</label>
+                <textarea id="alamat" name="alamat" placeholder="Masukkan alamat lengkap Anda"></textarea>
+            </fieldset>
+
+            <!-- Kelompok Hobi -->
+            <fieldset>
+                <legend>Hobi (Pilih minimal 2)</legend>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="membaca" name="hobi" value="Membaca">
+                    <label for="membaca">Membaca</label>
+                    
+                    <input type="checkbox" id="olahraga" name="hobi" value="Olahraga">
+                    <label for="olahraga">Olahraga</label>
+                    
+                    <input type="checkbox" id="musik" name="hobi" value="Musik">
+                    <label for="musik">Musik</label>
+                    
+                    <input type="checkbox" id="gaming" name="hobi" value="Gaming">
+                    <label for="gaming">Gaming</label>
+                </div>
+            </fieldset>
+
+            <!-- Kelompok Jurusan -->
+            <fieldset>
+                <legend>Pilihan Jurusan</legend>
+                <label for="jurusan">Jurusan*</label>
+                <select id="jurusan" name="jurusan" required>
+                    <option value="">-- Pilih Jurusan --</option>
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="Teknik Elektro">Teknik Elektro</option>
+                    <option value="Bisnis Digital">Bisnis Digital</option>
+                    <option value="Sistem Informasi">Sistem Informasi</option>
+                </select>
+            </fieldset>
+
+            <!-- Tombol Submit -->
+            <button type="submit">Daftar Sekarang</button>
+        </form>
+
+        <!-- Link Informasi Kampus -->
+        <div class="info-link">
+            <p>Untuk informasi lebih lanjut, kunjungi <a href="https://www.stitek.ac.id" target="_blank">website kampus kami</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
