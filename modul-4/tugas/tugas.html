@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Elektronik Cepat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .product-display {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .product-list {
+            cursor: pointer;
+        }
+        .product-list:hover {
+            background-color: #f8f9fa;
+        }
+        .receipt {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Header & Waktu Transaksi -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1>Toko Elektronik Cepat</h1>
+                <h5 id="current-time"></h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Display Produk Utama -->
+            <div class="col-md-8">
+                <div class="product-display">
+                    <div class="text-center mb-3">
+                        <img id="slideshow-image" src="" alt="Product Image" class="img-fluid" style="max-height: 300px;">
+                        <div class="mt-2">
+                            <button onclick="changeImage(-1)" class="btn btn-secondary">Previous</button>
+                            <button onclick="changeImage(1)" class="btn btn-secondary">Next</button>
+                        </div>
+                    </div>
+                    <h3 id="product-name"></h3>
+                    <h4 id="product-price"></h4>
+                </div>
+
+                <!-- Form Pemesanan -->
+                <div class="mt-4">
+                    <h4>Form Pemesanan</h4>
+                    <form id="order-form">
+                        <div class="mb-3">
+                            <label for="customer-name" class="form-label">Nama Pemesan</label>
+                            <input type="text" class="form-control" id="customer-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Jumlah Pesan</label>
+                            <input type="number" class="form-control" id="quantity" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="promo-code" class="form-label">Kode Promo (Opsional)</label>
+                            <input type="text" class="form-control" id="promo-code">
+                        </div>
+                        <button type="button" onclick="processOrder()" class="btn btn-primary">Pesan Sekarang</button>
+                    </form>
+                </div>
+
+                <!-- Struk Pesanan -->
+                <div id="receipt" class="receipt mt-4" style="display: none;">
+                    <h4>Struk Pesanan</h4>
+                    <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+                    <p><strong>Nama Pemesan:</strong> <span id="receipt-name"></span></p>
+                    <p><strong>Produk:</strong> <span id="receipt-product"></span></p>
+                    <p><strong>Jumlah:</strong> <span id="receipt-quantity"></span></p>
+                    <p><strong>Subtotal:</strong> Rp <span id="subtotal"></span></p>
+                    <p><strong>Potongan:</strong> Rp <span id="discount"></span></p>
+                    <p><strong>Total Akhir:</strong> Rp <span id="total"></span></p>
+                </div>
+            </div>
+
+            <!-- Daftar Produk -->
+            <div class="col-md-4">
+                <h4>Daftar Produk</h4>
+                <div id="product-list" class="list-group"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Produk
+        const products = [
+            {
+                name: "Iphone 11",
+                price: 3556180,
+                images: [
+                    "https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-11/iphone-11-white.webp",
+                    "https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-11/iphone-11-black.jpg",
+                    "https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-11/iphone-11-green.jpg"
+                ]
+            },
+            {
+                name: "Laptop Asus TUF A15 Ryzen 5-7535HS",
+                price: 9599000,
+                images: [
+                    "https://static.retailworldvn.com/Products/Images/12217/332172/asus-tuf-a15-ryzen-5-7535hs-fa506nf-r525b6t-om-black-1.jpg",
+                    "https://static.retailworldvn.com/Products/Images/12217/332172/asus-tuf-a15-ryzen-5-7535hs-fa506nf-r525b6t-om-black-6.jpg"
+                ]
+            },
+            {
+                name: "Redmi Note 14 5G",
+                price: 3699000,
+                images: [
+                    "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-note-14-5g-pc/387b259a8b8e9f9536e4dd3104a76b18.jpg",
+                    "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-note-14-5g-pc/5c39f6bf4093c71c43311864b9761bc7.jpg",
+                    "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-note-14-5g-pc/0a69f325c8e9a86f29885ab3e88f6945.jpg",
+                    "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-note-14-5g-pc/a05c9947fd724471640aaa3a85e8ec7f.jpg"
+                ]
+            }
+        ];
+
+        // Variabel Global
+        let currentProductIndex = 0;
+        let currentImageIndex = 0;
+        const slideshowImage = document.getElementById('slideshow-image');
+        const productNameElement = document.getElementById('product-name');
+        const productPriceElement = document.getElementById('product-price');
+        const productListElement = document.getElementById('product-list');
+        const currentTimeElement = document.getElementById('current-time');
+
+        // Inisialisasi
+        function init() {
+            displayProductList();
+            showProduct(currentProductIndex);
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
+        // Menampilkan Daftar Produk
+        function displayProductList() {
+            productListElement.innerHTML = '';
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'list-group-item product-list';
+                productItem.textContent = `${product.name} - Rp ${product.price.toLocaleString()}`;
+                productItem.onclick = () => {
+                    currentProductIndex = index;
+                    currentImageIndex = 0;
+                    showProduct(currentProductIndex);
+                };
+                productListElement.appendChild(productItem);
+            });
+        }
+
+        // Menampilkan Produk yang Dipilih
+        function showProduct(index) {
+            const product = products[index];
+            productNameElement.textContent = product.name;
+            productPriceElement.textContent = `Rp ${product.price.toLocaleString()}`;
+            slideshowImage.src = product.images[0];
+            currentImageIndex = 0;
+        }
+
+        // Mengganti Gambar di Slideshow
+        function changeImage(direction) {
+            const product = products[currentProductIndex];
+            currentImageIndex += direction;
+            
+            if (currentImageIndex >= product.images.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = product.images.length - 1;
+            }
+            
+            slideshowImage.src = product.images[currentImageIndex];
+        }
+
+        // Memperbarui Waktu
+        function updateTime() {
+            const now = new Date();
+            currentTimeElement.textContent = now.toLocaleString();
+        }
+
+        // Proses Pemesanan
+        function processOrder() {
+            const customerName = document.getElementById('customer-name').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const promoCode = document.getElementById('promo-code').value;
+            
+            // Validasi Form
+            if (!customerName || !quantity || quantity <= 0) {
+                alert('Mohon isi nama pemesan dan jumlah pesanan (minimal 1)');
+                return;
+            }
+            
+            const product = products[currentProductIndex];
+            const subtotal = product.price * quantity;
+            
+            // Hitung Diskon
+            let discount = 0;
+            if (promoCode.toUpperCase() === 'DISKON10') {
+                discount = subtotal * 0.1;
+            }
+            
+            const total = subtotal - discount;
+            
+            // Generate Order ID
+            const orderId = 'INV-' + Math.floor(10000 + Math.random() * 90000);
+            
+            // Tampilkan Struk
+            document.getElementById('order-id').textContent = orderId;
+            document.getElementById('receipt-name').textContent = customerName;
+            document.getElementById('receipt-product').textContent = product.name;
+            document.getElementById('receipt-quantity').textContent = quantity;
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString();
+            document.getElementById('discount').textContent = discount.toLocaleString();
+            document.getElementById('total').textContent = total.toLocaleString();
+            
+            document.getElementById('receipt').style.display = 'block';
+        }
+
+        // Jalankan saat halaman dimuat
+        window.onload = init;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

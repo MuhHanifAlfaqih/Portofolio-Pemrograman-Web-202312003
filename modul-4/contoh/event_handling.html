@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Latihan Event Handling</title>
+    <style>
+        #inputName { 
+            border: 2px solid #ccc; 
+            padding: 8px; 
+            transition: border-color 0.3s; 
+        }
+        #inputName:focus { 
+            border-color: dodgerblue;
+        }
+    </style>
+</head>
+<body>
+    <hr>
+    <h3>Event onmouseover & onmouseout</h3>
+    
+    <img id="gambar" src="https://placehold.co/200x150/e5e5e5/000?text=Gambar+Awal" 
+         alt="Gambar" onmouseover="gantiGambar()" onmouseout="kembalikanGambar()">
+    
+    <h3>Event onfocus & onchange</h3>
+    
+    <label for="inputName">Nama Anda:</label>
+    <input type="text" id="inputName" onchange="tampilkanOutput()">
+    <p>Output: <span id="hasil"></span></p>
+
+    <script>
+        function gantiGambar() { 
+            document.getElementById("gambar").src = "gambar1.webp";
+        }  
+
+        function kembalikanGambar() { 
+            document.getElementById("gambar").src = "gambar2.webp";
+        }  
+
+        function tampilkanOutput() {  
+            var nilaiInput = document.getElementById("inputName").value;  
+            document.getElementById("hasil").innerHTML = "<b>" + nilaiInput + "</b>";  
+        }  
+    </script>
+</body>
+</html>
